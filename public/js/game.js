@@ -16,8 +16,16 @@ let food = {
     y: Math.floor(Math.random() * 15 + 1) * 32
 }
 
+let snake = [];
+snake[0] = {
+    x: 9 * box,
+    y: 10 * box
+}
+
 const drawGame = () => {
     ctx.drawImage(ground, 0, 0);
+
+    ctx.drawImage(foodImage, food.x, food.y);
 }
 
 let game = setInterval(drawGame, 100);
