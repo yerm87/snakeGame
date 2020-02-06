@@ -38,13 +38,21 @@ const direction = (event) => {
 
 document.addEventListener('keydown', direction);
 
+const eatTail = (head, array) => {
+    for(let i=0; i<array.length; i++){
+        if(head.x === array[i].x && head.y === array[i].y){
+            clearInterval(game);
+        }
+    }
+}
+
 const drawGame = () => {
     ctx.drawImage(ground, 0, 0);
 
     ctx.drawImage(foodImage, food.x, food.y);
 
     for(let i=0; i<snake.length; i++){
-        ctx.fillStyle = 'green';
+        ctx.fillStyle = i === 0 ? 'green' : 'red';
         ctx.fillRect(snake[i].x, snake[i].y, box, box);
     }
 
@@ -64,6 +72,10 @@ const drawGame = () => {
         }
     } else {
         snake.pop();
+    }
+
+    if(snakeX < box || snakeX > box * 17 || snakeY < box * 3 || snakeY > box * 17){
+        clearInterval(game);
     }
 
     if(dir === 'left'){
@@ -86,6 +98,8 @@ const drawGame = () => {
         x: snakeX,
         y: snakeY
     }
+
+    eatTail(newHead, snake);
 
     snake.unshift(newHead);
 }
